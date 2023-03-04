@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class PlayerInput {
 
-    static ArrayManipulation myArray = new ArrayManipulation();
+    private static ArrayManipulation myArray = new ArrayManipulation();
 
     // a move is valid if:
     // the input is an integer between 1 to 9 inclusive, and
     // no repeated moves, i.e. if 3 is already picked it can't be picked again
-    static boolean validateMoves(int move, int validMoves[]) {
+    private static boolean validateMoves(int move, int validMoves[]) {
         if (myArray.isin(move, validMoves)) {
             return true;
         } else {
@@ -16,12 +16,12 @@ public class PlayerInput {
     }
 
     // once a player makes a valid move, update the validMoves array
-    static int[] updateValidMoves(int move, int validMoves[]) {
+    int[] updateValidMoves(int move, int validMoves[]) {
         return myArray.remove(move, validMoves);
     }
     
 
-    static int getInput(int player, int validMoves[]) {
+    int getInput(int player, int validMoves[]) {
         // gets input from player and checks for validity
         // int player can only take value of either 1 or 2
         int move = 0;
