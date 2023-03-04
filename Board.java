@@ -1,42 +1,41 @@
 /**
-A tic tac toe board is 3x3 which looks like this:
+ * A tic tac toe board is 3x3 which looks like this:
+ * 
+ *    |   |   
+ * ___|___|___
+ *    |   |   
+ * ___|___|___
+ *    |   |   
+ *    |   |   
+ * 
+ * We can make this by using a two-dimensional array:
+ * 
+ * arr = {{. , . , .}, 
+ *        {. , . , .}, 
+ *        {. , . , .}}
+ * 
+ * therefore, in order to access each cell (I'm calling them cells, 
+ * don't know if there's an actual name), we can simply call the indeces, i.e.
+ * 
+ * [0,0] | [0,1] | [0,2]
+ * ______|_______|_______
+ * [1,0] | [1,1] | [1,2]
+ * ______|_______|_______
+ * [2,0] | [2,1] | [2,2]
+ *       |       |       
+ * 
+ * A finished (tied) game would look something like this:
+ * 
+ *  X | O | X 
+ * ___|___|___
+ *  O | X | O 
+ * ___|___|___
+ *  O | X | X 
+ *    |   |   
+ * 
+ **/
 
-   |   |   
-___|___|___
-   |   |   
-___|___|___
-   |   |   
-   |   |   
-
-We can make this by using a two-dimensional array:
-
-arr = {{. , . , .}, 
-       {. , . , .}, 
-       {. , . , .}}
-
-therefore, in order to access each cell (I'm calling them cells, 
-don't know if there's an actual name), we can simply call the indeces, i.e.
-
-[0,0] | [0,1] | [0,2]
-______|_______|_______
-[1,0] | [1,1] | [1,2]
-______|_______|_______
-[2,0] | [2,1] | [2,2]
-      |       |       
-
-A finished game would look something like this:
-
- X | O | X 
-___|___|___
- O | X | O 
-___|___|___
- O | X | X 
-   |   |   
-
-**/
-
-
-public class BuildBoard {
+ public class Board {
     private int size = 3;
 
     char[][] buildBoard() {
@@ -76,8 +75,7 @@ public class BuildBoard {
     char[][] updateBoard(int player, int move, char[][] board) {
         // updates the board based on player move.
         // move is an integer from 1 to 9 corresponding to the location of the board,
-        // player is an integer, either 1 or 2, which will determine whether
-        // the symbol will be 'X' or 'O'.
+        // player is an integer, either 1 or 2.
 
         char symbol;
         if (player == 1) {
