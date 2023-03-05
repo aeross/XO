@@ -39,7 +39,7 @@
  * 
  * 
  * Note: this Board class assumes square boards only (equal number of rows and columns)
- **/
+ */
 
 import java.util.Arrays;
 
