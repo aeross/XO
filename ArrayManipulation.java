@@ -1,14 +1,14 @@
 public class ArrayManipulation {
 
-    boolean isin(int num, int arr[]) {
-        // check if the number is in the array using a simple linear search
+    public boolean isin(int num, int arr[]) {
+        // check if the number (int num) is in the array using a simple linear search
         for (int i: arr) {
             if (num == i) return true;
         }
         return false;
     }
 
-    int[] remove(int num, int arr[]) {
+    public int[] remove(int num, int arr[]) {
         // removes an element in the array that is equivalent to num
         // if there are duplicate values in the array, this will remove only the first one
 

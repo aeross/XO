@@ -101,7 +101,7 @@ public class Board {
         }
     }
 
-    char[][] updateBoard(char newVal, int loc, char[][] board) {
+    public char[][] updateBoard(char newVal, int loc, char[][] board) {
         // updates the value of the board
         int length = this.size;
 
@@ -124,7 +124,7 @@ class XOBoard extends Board {
         super(XOSIZE);
     }
 
-    char[][] updateXOBoard(int player, int move, char[][] board) {
+    public char[][] updateXOBoard(int player, int move, char[][] board) {
         // updates tic tac toe board based on player move.
         // move is an integer from 1 to 9 corresponding to the location of the board,
         // player is an integer, either 1 or 2, with player 1 corresponding to 'X' and 2 to 'O'.
