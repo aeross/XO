@@ -22,7 +22,7 @@ public class WinCondition {
          * - board[0][0], board[1][1], board[2][2]  // diagonal
          * - board[0][2], board[1][1], board[2][0]  // diagonal
          * 
-         * to keep things simple, I'm just gonna do this the "dirty" way
+         * to keep things simple, I'm just gonna do this the "dumb" way
          * honestly if this is connect 4 or gomoku, doing it this way would get the code real ugly
          * but tic tac toe is simple enough that I don't have to spend many hours coding this part
          **/
