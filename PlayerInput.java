@@ -25,14 +25,12 @@
 
 import java.util.Scanner;
 
-public class PlayerInput {
+abstract class PlayerInput {
 
-    private static ArrayManipulation myArray = new ArrayManipulation();
+    protected ArrayManipulation myArray = new ArrayManipulation();
 
-    // a move is valid if:
-    // the input is an integer between 1 to 9 inclusive, and
-    // no repeated moves, i.e. if 3 is already picked it can't be picked again
-    private static boolean validateMoves(int move, int validMoves[]) {
+    // declares a move as valid if the move is in validMoves
+    public boolean validateMoves(int move, int[] validMoves) {
         if (myArray.isin(move, validMoves)) {
             return true;
         } else {
@@ -40,15 +38,36 @@ public class PlayerInput {
         }
     }
 
-    // once a player makes a valid move, update the validMoves array
-    public int[] updateValidMoves(int move, int validMoves[]) {
+    // updates validMoves after the player makes a move based on the current game situation
+    abstract int[] updateValidMoves(int move, int[] validMoves);
+
+    // gets input (move) from player, checks for validity, and returns the value of the move
+    abstract int getInput(int[] validMoves, int player);
+}
+
+
+class XOPlayerInput extends PlayerInput {
+
+    private static final int PLAYER = 1;  // player 1 always goes first
+    private static final int[] VALIDMOVES = {1, 2, 3, 4, 5, 6, 7, 8, 9};  // all valid moves
+
+    public int getPlayer() { 
+        return PLAYER;
+    }
+    public int[] getValidMoves() { 
+        return VALIDMOVES;
+    }
+
+
+    // in tic tac toe, you can't have players picking the same move more than once
+    // (i.e., if a player has already picked 5, 5 cannot be picked again by either player)
+    public int[] updateValidMoves(int move, int[] validMoves) {
         return myArray.remove(move, validMoves);
     }
     
-
-    public int getInput(int player, int validMoves[]) {
-        // gets input from player and checks for validity
-        // int player can only take value of either 1 or 2
+    
+    public int getInput(int[] validMoves, int player) {
+        // returns the move the player makes
         int move = 0;
         boolean valid = false;
 
