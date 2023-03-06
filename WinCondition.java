@@ -1,4 +1,15 @@
-public class WinCondition {
+public abstract class WinCondition {
+    // based on the board, check if any player has won
+    public abstract boolean checkWin(char[][] board);
+}
+/**
+ * The reason why I'm declaring a superclass is because not only for XO,
+ * this class can be extended for other suitable board games as well such as Connect Four,
+ * i.e., class ConnectFourWinCondition extends WinCondition { ... }.
+ * Same reason applies for the classes in Board.java and PlayerInput.java.
+ */
+
+class XOWinCondition extends WinCondition {
 
     public boolean checkWin(char[][] board) {
         /**
