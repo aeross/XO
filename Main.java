@@ -29,7 +29,7 @@ public class Main {
             gameBoard.printBoard(board);
 
             // 3: CHECK WIN CONDITION
-            WinCondition gameWin = new WinCondition();
+            XOWinCondition gameWin = new XOWinCondition();
             if (gameWin.checkWin(board)) {
                 System.out.println("Player " + player + " victory!");
                 break;
