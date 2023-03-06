@@ -3,9 +3,9 @@ Java implementation of the XO game (more commonly known as Tic-tac-toe). This ga
 
 ## Instructions
 
-To play the game, simply compile and run Main.java.
+To play the game, simply compile all files and run Main.java.
 
 ```
-javac Main.java
+javac *.java
 java Main
 ```
