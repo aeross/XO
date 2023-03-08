@@ -1,19 +1,19 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
-
 public class Main {
-    public static void main(String[] args) {
+    public static void runXO() {
         // 1: BUILD THE BOARD
         XOBoard gameBoard = new XOBoard();
-        char board[][] = gameBoard.buildBoard();
-        gameBoard.printBoard(board);
+        gameBoard.buildBoard();
+        gameBoard.printBoard();
 
         // 2: PLAYER MOVE
         XOPlayerInput gameInput = new XOPlayerInput();
         // we are going to use this array to check for valid moves 
         int validMoves[] = gameInput.getValidMoves();
         // and this to determine whether it's player 1 or player 2's turn
-        int player = gameInput.getPlayer();
+        int player = 1;
         
         
         while (validMoves.length > 0) {
@@ -24,13 +24,13 @@ public class Main {
             validMoves = gameInput.updateValidMoves(move, validMoves);
 
             // update and print board
-            board = gameBoard.updateXOBoard(player, move, board);
+            gameBoard.updateXOBoard(player, move);
             System.out.println("");  // line skip for formatting purposes
-            gameBoard.printBoard(board);
+            gameBoard.printBoard();
 
             // 3: CHECK WIN CONDITION
-            XOWinCondition gameWin = new XOWinCondition();
-            if (gameWin.checkWin(board)) {
+            XOWin gameWin = new XOWin();
+            if (gameWin.checkWin(gameBoard.getBoard())) {
                 System.out.println("Player " + player + " victory!");
                 break;
             }
@@ -39,14 +39,54 @@ public class Main {
             player = (player % 2) + 1;
         }
 
-
         // 4: FINAL STEP
         // if both players run out of moves, a draw is declared
         if (validMoves.length == 0 && player == 2) {
+            // player == 2 is needed in case player 1 wins on the last move
             System.out.println("Draw!");
         }
-        
         // the end!
+    }
+
+
+    public static void runConnectFour() {
+        // mostly similar to the code in runXO()
+        // 1: BUILD THE BOARD
+        ConnectFourBoard gameBoard = new ConnectFourBoard();
+        gameBoard.buildBoard();
+        gameBoard.printBoard();
+
+        // 2: PLAYER MOVE
+        ConnectFourPlayerInput gameInput = new ConnectFourPlayerInput();
+        int validMoves[] = gameInput.getValidMoves();
+        int player = 1;
+        
+        
+        while (validMoves.length > 0) {
+            int move = gameInput.getInput(validMoves, player);
+            validMoves = gameInput.updateValidMoves(move, validMoves);
+            gameBoard.updateConnectFourBoard(player, move);
+            System.out.println("");
+            gameBoard.printBoard();
+
+            // 3: CHECK WIN CONDITION
+            XOWin gameWin = new XOWin();
+            if (gameWin.checkWin(gameBoard.getBoard())) {
+                System.out.println("Player " + player + " victory!");
+                break;
+            }
+            player = (player % 2) + 1;
+        }
+
+        // 4: FINAL STEP
+        if (validMoves.length == 0 && player == 1) {
+            System.out.println("Draw!");
+        }
+    }
+
+
+    public static void main(String[] args) {
+        runConnectFour();
     }
 }
 

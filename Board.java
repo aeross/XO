@@ -25,75 +25,81 @@
  * [2,0] | [2,1] | [2,2]
  *       |       |       
  * 
- * To keep things simple (and avoid two-dimensional confusion), I choose for 
- * the naming system of each cell to be a number in ascending order starting from 1.
- * For example, a 3x3 board has numbers from 1 to 9,
- * with each number representing these locations on the board:
- * 
- *  1 | 2 | 3 
- * ___|___|___
- *  4 | 5 | 6 
- * ___|___|___
- *  7 | 8 | 9 
- *    |   |   
- * 
- * 
- * Note: this Board class assumes square boards only (equal number of rows and columns)
  */
 
 import java.util.Arrays;
 
 public class Board {
-    private int size;
+    private int row;
+    private int col;
+    protected char[][] board;
     
     // constructor
     Board() {
-        this.size = 0;
+        this.row = 0;
+        this.col = 0;
     }
 
-    Board(int size) {
-        this.size = size;
+    Board(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     // methods
-    public char[][] buildBoard() {
-        // builds a board with 2d array as explained above and fills it with ' '
-        char board[][] = new char[this.size][this.size];
-        for (char[] col: board) {
+    public void buildBoard() {
+        // builds an empty board (filled with ' ') with 2d array as explained above
+        char newBoard[][] = new char[this.row][this.col];
+        for (char[] col: newBoard) {
             Arrays.fill(col, ' ');
         }
-        return board;
+        this.board = newBoard;
     }
 
-    public void printBoard(char[][] board) {
+    public char[][] getBoard() {
+        return this.board;
+    }
+
+    public void printBoard() {
         // prints the board with the same format as explained above
-        int colnum = 0, rownum;
-        for (char[] col: board) {
+        int rownum = 0, colnum;
 
-            // prints the upper part of a column
-            rownum = 0;
-            for (char i: col) {
-                System.out.print(" " + i + " ");
+        /**
+         * The tic tac toe board, as an example
+         * Line 1:   1 | 2 | 3     
+         * Line 2:  ___|___|___
+         * Line 3:   4 | 5 | 6 
+         * Line 4:  ___|___|___
+         * Line 5:   7 | 8 | 9 
+         * Line 6:     |   |   
+         */
+        for (char[] col: this.board) {
 
-                rownum += 1;
-                if (rownum < this.size) {
+            // prints the upper part of a row (lines 1, 3, 5)
+            colnum = 0;
+            for (char value: col) {
+                System.out.print(" " + value + " ");
+
+                colnum += 1;
+                if (colnum < this.col) {
                     System.out.print("|");
                 }
             }
             
-            // prints the lower part of a column
-            rownum = 1;
-            colnum += 1;
-            if (colnum < this.size) {
+            // prints the lower part of a row
+            colnum = 1;
+            rownum += 1;
+            if (rownum < this.row) {
+                // all lower part rows except the last row (lines 2, 4)
                 System.out.print("\n___");
-                while (rownum < this.size) {
-                    rownum += 1;
+                while (colnum < this.col) {
+                    colnum += 1;
                     System.out.print("|___");
                 }
             } else {
+                // the last lower part column (line 6)
                 System.out.print("\n   ");
-                while (rownum < this.size) {
-                    rownum += 1;
+                while (colnum < this.col) {
+                    colnum += 1;
                     System.out.print("|   ");
                 }
             }
@@ -101,30 +107,37 @@ public class Board {
         }
     }
 
-    public char[][] updateBoard(char newVal, int loc, char[][] board) {
+    public void updateBoard(char newVal, int loc) {
         // updates the value of the board
-        int length = this.size;
+        /**
+         * loc is an integer from 1 to n corresponding to the location of the board, i.e.
+         *  1 | 2 | 3 
+         * ___|___|___
+         *  4 | 5 | 6 
+         * ___|___|___
+         *  7 | 8 | 9 
+         *    |   |   
+         * for a 3x3 board.
+         */
+        int colLoc = (loc - 1) / this.col;
+        int rowLoc = (loc - 1) % this.col;
+        this.board[colLoc][rowLoc] = newVal;
+    }
 
-        int colLoc = (loc - 1) / length;
-        int rowLoc = (loc - 1) % length;
-        board[colLoc][rowLoc] = newVal;
-
-        return board;
+    public void updateBoard(char newVal, int rowLoc, int colLoc) {
+        this.board[colLoc][rowLoc] = newVal;
     }
 }
 
 
-
 class XOBoard extends Board {
-    // XO, another name for tic tac toe
-
     private static final int XOSIZE = 3;
 
     XOBoard() {
-        super(XOSIZE);
+        super(XOSIZE, XOSIZE);
     }
 
-    public char[][] updateXOBoard(int player, int move, char[][] board) {
+    public void updateXOBoard(int player, int move) {
         // updates tic tac toe board based on player move.
         // move is an integer from 1 to 9 corresponding to the location of the board,
         // player is an integer, either 1 or 2, with player 1 corresponding to 'X' and 2 to 'O'.
@@ -136,7 +149,36 @@ class XOBoard extends Board {
             newVal = 'O';
         }
 
-        board = super.updateBoard(newVal, move, board);
-        return board;
+        super.updateBoard(newVal, move);
+    }
+}
+
+class ConnectFourBoard extends Board {
+
+    private static final int ROWS = 6, COLS = 7;
+
+    ConnectFourBoard() {
+        super(ROWS, COLS);
+    }
+
+    public void updateConnectFourBoard(int player, int move) {
+        // updates connect four board based on player move.
+        // move is an integer from 1 to 7 corresponding to the location of the board,
+        // player is an integer, either 1 or 2, with player 1 corresponding to 'X' and 2 to 'O'.
+
+        char newVal;
+        if (player == 1) {
+            newVal = 'X';
+        } else {
+            newVal = 'O';
+        }
+
+        // need to make the move "drop down" all the way to the bottom-most unoccupied location
+        ConnectFourPlayerInput newInput = new ConnectFourPlayerInput();
+        int[] moveCounter = newInput.getMoveCounter();
+        int rowLoc = move - 1;
+        int colLoc = ROWS - moveCounter[rowLoc];
+
+        super.updateBoard(newVal, rowLoc, colLoc);
     }
 }
