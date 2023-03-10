@@ -21,6 +21,8 @@
  *  X |   |   
  *    |   |   
  * 
+ * then, either player cannot pick 7 again as it has already been picked.
+ * 
  * Similarly, in connect four, each player has to type a number between 1 to 7,
  * with each number representing these columns on the board:
  * 
@@ -59,22 +61,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-public abstract class PlayerInput {
-
-    protected ArrayManipulation myArray = new ArrayManipulation();
-
-    // method to check if a move is valid
-    public abstract boolean validateMoves(int move, int[] validMoves);
-
-    // updates validMoves after the player makes a move based on the current game situation
-    public abstract int[] updateValidMoves(int move, int[] validMoves);
-
-    // gets input (move) from player, checks for validity, and returns the value of the move
-    public abstract int getInput(int[] validMoves, int player);
-}
-
-
-class XOPlayerInput extends PlayerInput {
+class XOPlayerInput {
 
     private static final int[] VALIDMOVES = {1, 2, 3, 4, 5, 6, 7, 8, 9};  // all valid moves
 
@@ -84,19 +71,19 @@ class XOPlayerInput extends PlayerInput {
 
     // declares a move as valid if the move is in validMoves
     public boolean validateMoves(int move, int[] validMoves) {
-        if (myArray.isin(move, validMoves)) {
+        if (ArrayManipulation.isin(move, validMoves)) {
             return true;
         } else {
             return false;
         }
     }
 
-    // in tic tac toe, you can't have players picking the same move more than once
-    // (i.e., if a player has already picked 5, 5 cannot be picked again by either player)
+    // removes picked move from validMoves
     public int[] updateValidMoves(int move, int[] validMoves) {
-        return myArray.remove(move, validMoves);
+        return ArrayManipulation.remove(move, validMoves);
     }
     
+    // gets input from player, checks its validity, and returns the move if valid
     public int getInput(int[] validMoves, int player) {
         int move = 0;
         boolean valid = false;
@@ -113,10 +100,10 @@ class XOPlayerInput extends PlayerInput {
                 } else if (move == 0) {
                     System.exit(0);
                 } else {
-                    System.out.println("Error: move is invalid");
+                    System.out.println("Error: invalid move");
                 }
             } catch (Exception e) {
-                System.out.println("Error: move is invalid");
+                System.out.println("Error: invalid move");
             }
         }
         return move;
@@ -124,33 +111,21 @@ class XOPlayerInput extends PlayerInput {
 }
 
 
-class ConnectFourPlayerInput extends PlayerInput {
+class ConnectFourPlayerInput {
 
-    private static final int[] VALIDMOVES = {1, 2, 3, 4, 5, 6, 7};
     // in connect 4, you can pick the same number multiple times until the column fills up,
     // or in a standard 6x7 connect 4, until the number has been picked 6 times by either player,
     // so we'll use these to keep track of it
-    private static final int COLSIZE = 6;
-    private static int[] moveCounter = {0, 0, 0, 0, 0, 0, 0};
+    private static final int[] MOVECOUNTER = new int[ConnectFourBoard.COLS];
 
-    // getters
-    public int[] getValidMoves() { 
-        return VALIDMOVES;
-    }
     public int[] getMoveCounter() {
-        return moveCounter;
-        /**
-         * note to self: if I declare int[] moveCounter as NOT static, the value in this method
-         * will remain [0, 0, 0, 0, 0, 0] forever even though I've updated them below, it's kinda
-         * fascinating and confusing how variables in java works :-)
-         */
+        return MOVECOUNTER;
     }
 
-    public boolean validateMoves(int move, int[] validMoves) {
+    public boolean validateMoves(int move, int[] moveCounter) {
         // if the move is between 1-7 and has picked less than 6 times, then it is a valid move
         try {
-            if ((moveCounter[move - 1] < COLSIZE)) {
-                moveCounter[move - 1] += 1;
+            if ((moveCounter[move - 1] < ConnectFourBoard.ROWS)) {
                 return true;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -159,15 +134,12 @@ class ConnectFourPlayerInput extends PlayerInput {
         return false;
     }
 
-    public int[] updateValidMoves(int move, int[] validMoves) {
-        // once the move has been picked 6 times, remove that from validMoves
-        if (moveCounter[move - 1] == COLSIZE) {
-            return myArray.remove(move, validMoves);
-        }
-        return validMoves;
+    public int[] updateValidMoves(int move, int[] moveCounter) {
+        moveCounter[move - 1] += 1;
+        return moveCounter;
     }
     
-    public int getInput(int[] validMoves, int player) {
+    public int getInput(int[] moveCounter, int player) {
         int move = 0;
         boolean valid = false;
 
@@ -178,15 +150,15 @@ class ConnectFourPlayerInput extends PlayerInput {
             try {
                 move = input.nextInt();
                 // validate input
-                if (validateMoves(move, validMoves)) {
+                if (validateMoves(move, moveCounter)) {
                     valid = true;
                 } else if (move == 0) {
                     System.exit(0);
                 } else {
-                    System.out.println("Error: move is invalid");
+                    System.out.println("Error: invalid move");
                 }
             } catch (Exception e) {
-                System.out.println("Error: move is invalid");
+                System.out.println("Error: invalid move");
             }
         }
         return move;
