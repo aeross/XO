@@ -50,7 +50,7 @@ public class Main {
 
 
     public static void runConnectFour() {
-        // mostly similar to the code in runXO()
+        // steps are mostly similar to the code in runXO()
         // 1: BUILD THE BOARD
         ConnectFourBoard gameBoard = new ConnectFourBoard();
         gameBoard.buildBoard();
@@ -58,35 +58,57 @@ public class Main {
 
         // 2: PLAYER MOVE
         ConnectFourPlayerInput gameInput = new ConnectFourPlayerInput();
-        int validMoves[] = gameInput.getValidMoves();
+        int moveCounter[] = gameInput.getMoveCounter();
         int player = 1;
+        int totalSquares = ConnectFourBoard.COLS * ConnectFourBoard.ROWS;
         
-        
-        while (validMoves.length > 0) {
-            int move = gameInput.getInput(validMoves, player);
-            validMoves = gameInput.updateValidMoves(move, validMoves);
-            gameBoard.updateConnectFourBoard(player, move);
+        while (ArrayManipulation.sum(moveCounter) < totalSquares) {
+            int move = gameInput.getInput(moveCounter, player);
+            moveCounter = gameInput.updateValidMoves(move, moveCounter);
+            gameBoard.updateConnectFourBoard(player, move, moveCounter);
             System.out.println("");
             gameBoard.printBoard();
 
             // 3: CHECK WIN CONDITION
-            XOWin gameWin = new XOWin();
+            ConnectFourWin gameWin = new ConnectFourWin();
             if (gameWin.checkWin(gameBoard.getBoard())) {
                 System.out.println("Player " + player + " victory!");
                 break;
             }
+
             player = (player % 2) + 1;
         }
 
         // 4: FINAL STEP
-        if (validMoves.length == 0 && player == 1) {
+        if (ArrayManipulation.sum(moveCounter) == totalSquares && player == 1) {
             System.out.println("Draw!");
         }
     }
 
 
     public static void main(String[] args) {
-        runConnectFour();
+        System.out.println("To play Tic-Tac-Toe, type 1. To play Connect Four, type 2.");
+        Scanner input = new Scanner(System.in);
+        boolean valid = false;
+        while (!valid) {
+            try {
+                int move = input.nextInt();
+                System.out.println("Type 0 at anytime to quit the game.");
+                if (move == 0) {
+                    System.exit(0);
+                } else if (move == 1) {
+                    runXO();
+                    valid = true;
+                } else if (move == 2) {
+                    runConnectFour();
+                    valid = true;
+                } else {
+                    System.out.println("Error: invalid input");
+                }   
+            } catch (Exception e) {
+                System.out.println("Error: invalid input");
+            }
+        }
     }
 }
 
