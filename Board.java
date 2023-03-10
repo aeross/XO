@@ -15,8 +15,7 @@
  *        {. , . , .}, 
  *        {. , . , .}}
  * 
- * therefore, in order to access each cell (I'm calling them cells, 
- * don't know if there's an actual name), we can simply call the indeces, i.e.
+ * therefore, in order to access each square, we can simply call the indeces, i.e.
  * 
  * [0,0] | [0,1] | [0,2]
  * ______|_______|_______
@@ -32,7 +31,7 @@ import java.util.Arrays;
 public class Board {
     private int row;
     private int col;
-    protected char[][] board;
+    private char[][] board;
     
     // constructor
     Board() {
@@ -108,7 +107,6 @@ public class Board {
     }
 
     public void updateBoard(char newVal, int loc) {
-        // updates the value of the board
         /**
          * loc is an integer from 1 to n corresponding to the location of the board, i.e.
          *  1 | 2 | 3 

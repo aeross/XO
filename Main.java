@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void runXO() {
-        // 1: BUILD THE BOARD
+        // 1: BUILD BOARD
         XOBoard gameBoard = new XOBoard();
         gameBoard.buildBoard();
         gameBoard.printBoard();
@@ -51,7 +51,7 @@ public class Main {
 
     public static void runConnectFour() {
         // steps are mostly similar to the code in runXO()
-        // 1: BUILD THE BOARD
+        // 1: BUILD BOARD
         ConnectFourBoard gameBoard = new ConnectFourBoard();
         gameBoard.buildBoard();
         gameBoard.printBoard();
@@ -90,10 +90,12 @@ public class Main {
         System.out.println("To play Tic-Tac-Toe, type 1. To play Connect Four, type 2.");
         Scanner input = new Scanner(System.in);
         boolean valid = false;
+
         while (!valid) {
             try {
                 int move = input.nextInt();
                 System.out.println("Type 0 at anytime to quit the game.");
+
                 if (move == 0) {
                     System.exit(0);
                 } else if (move == 1) {
@@ -105,6 +107,7 @@ public class Main {
                 } else {
                     System.out.println("Error: invalid input");
                 }   
+                
             } catch (Exception e) {
                 System.out.println("Error: invalid input");
             }
