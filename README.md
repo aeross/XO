@@ -1,14 +1,16 @@
 # XO
-Java implementation of the XO game (more commonly known as Tic-tac-toe). This game is programmed without GUI, so it relies on typed user input be played.
+Java implementation of board games! This program has two games, XO (more commonly known as Tic-Tac-Toe) and Connect Four. These games are programmed without GUI, so they rely on typed user input be played.
 
 ## Instructions
 
-To play the game, simply compile all files and run Main.java.
+To play a game, simply compile all files and run Main.java.
 
 ```
 javac *.java
 java Main
 ```
+
+After the program runs, type 1 to play Tic-Tac-Toe or 2 to play Connect Four.
 
 To take a deeper look into how the code works, open the following files in order, and the comments in the files will walk you through the process:
 
