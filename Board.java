@@ -72,11 +72,11 @@ public class Board {
          * Line 5:   7 | 8 | 9 
          * Line 6:     |   |   
          */
-        for (char[] col: this.board) {
+        for (char[] row: this.board) {
 
             // prints the upper part of a row (lines 1, 3, 5)
             colnum = 0;
-            for (char value: col) {
+            for (char value: row) {
                 System.out.print(" " + value + " ");
 
                 colnum += 1;
@@ -130,8 +130,9 @@ public class Board {
 }
 
 
+/* NOTE: The XO name in this code is syonymous with tic tac toe */
 class XOBoard extends Board {
-    private static final int XOSIZE = 3;
+    public static final int XOSIZE = 3;
 
     XOBoard() {
         super(XOSIZE, XOSIZE);
@@ -155,13 +156,13 @@ class XOBoard extends Board {
 
 class ConnectFourBoard extends Board {
 
-    private static final int ROWS = 6, COLS = 7;
+    public static final int ROWS = 6, COLS = 7;
 
     ConnectFourBoard() {
         super(ROWS, COLS);
     }
 
-    public void updateConnectFourBoard(int player, int move) {
+    public void updateConnectFourBoard(int player, int move, int[] moveCounter) {
         // updates connect four board based on player move.
         // move is an integer from 1 to 7 corresponding to the location of the board,
         // player is an integer, either 1 or 2, with player 1 corresponding to 'X' and 2 to 'O'.
@@ -174,8 +175,6 @@ class ConnectFourBoard extends Board {
         }
 
         // need to make the move "drop down" all the way to the bottom-most unoccupied location
-        ConnectFourPlayerInput newInput = new ConnectFourPlayerInput();
-        int[] moveCounter = newInput.getMoveCounter();
         int rowLoc = move - 1;
         int colLoc = ROWS - moveCounter[rowLoc];
 

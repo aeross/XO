@@ -143,7 +143,6 @@ class ConnectFourWin extends WinCondition {
             }
         }
     
-
         return false;   
     }
 }
