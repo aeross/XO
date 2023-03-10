@@ -1,5 +1,14 @@
 public class ArrayManipulation {
 
+    public static int sum(int arr[]) {
+        // returns the sum of all values in the array
+        int sum = 0;
+        for (int i: arr) {
+            sum += i;
+        }
+        return sum;
+    }
+
     public static boolean isin(int num, int arr[]) {
         // check if the number (int num) is in the array using a simple linear search
         for (int i: arr) {
