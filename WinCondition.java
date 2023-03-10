@@ -61,7 +61,7 @@ class XOWin extends WinCondition {
     }
 }
 
-/* 
+
 class ConnectFourWin extends WinCondition {
 
     public boolean checkWin(char[][] board) {
@@ -85,13 +85,65 @@ class ConnectFourWin extends WinCondition {
          * Checking the win the same way as I did before would get real ugly.
          * Therefore, we need some kind of iteration to check the win.
          */
-        /* 
-        for (char[] col: board) {
-
+        
+         
+         // horizontal check -- i is constant, j increases by 1
+        for (int i = 0; i < ConnectFourBoard.ROWS; i++) {
+            for (int j = 0; j < ConnectFourBoard.COLS; j++) {
+                try {
+                    if (board[i][j] != ' '           && board[i][j] == board[i][j+1] && 
+                        board[i][j] == board[i][j+2] && board[i][j] == board[i][j+3]) {
+                        return true;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    break;
+                }
+            }
         }
 
-        return false;
+        // vertical check -- i increases by 1, j is constant
+        for (int i = 0; i < ConnectFourBoard.ROWS; i++) {
+            for (int j = 0; j < ConnectFourBoard.COLS; j++) {
+                try {
+                    if (board[i][j] != ' '           && board[i][j] == board[i+1][j] && 
+                        board[i][j] == board[i+2][j] && board[i][j] == board[i+3][j]) {
+                        return true;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    break;
+                }
+            }
+        }
+
+        // upward diagonal check -- i decreases by 1, j increases by 1
+        for (int i = 0; i < ConnectFourBoard.ROWS; i++) {
+            for (int j = 0; j < ConnectFourBoard.COLS; j++) {
+                try {
+                    if (board[i][j] != ' '             && board[i][j] == board[i-1][j+1] && 
+                        board[i][j] == board[i-2][j+2] && board[i][j] == board[i-3][j+3]) {
+                        return true;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    continue;
+                }
+            }
+        }
+
+        // downward diagonal check -- i increases by 1, j increases by 1
+        for (int i = 0; i < ConnectFourBoard.ROWS; i++) {
+            for (int j = 0; j < ConnectFourBoard.COLS; j++) {
+                try {
+                    if (board[i][j] != ' '             && board[i][j] == board[i+1][j+1] && 
+                        board[i][j] == board[i+2][j+2] && board[i][j] == board[i+3][j+3]) {
+                        return true;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    continue;
+                }
+            }
+        }
+    
+
+        return false;   
     }
 }
-
-*/
