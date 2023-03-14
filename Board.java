@@ -95,7 +95,7 @@ public class Board {
                     System.out.print("|___");
                 }
             } else {
-                // the last lower part column (line 6)
+                // the last lower part row (line 6)
                 System.out.print("\n   ");
                 while (colnum < this.col) {
                     colnum += 1;
