@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +10,7 @@ public class Main {
         // 2: PLAYER MOVE
         XOPlayerInput gameInput = new XOPlayerInput();
         // we are going to use this array to check for valid moves 
-        int validMoves[] = gameInput.getValidMoves();
+        int[] validMoves = gameInput.getValidMoves();
         // and this to determine whether it's player 1 or player 2's turn
         int player = 1;
         
@@ -56,10 +55,10 @@ public class Main {
         gameBoard.printBoard();
 
         ConnectFourPlayerInput gameInput = new ConnectFourPlayerInput();
-        int moveCounter[] = gameInput.getMoveCounter();
+        int[] moveCounter = gameInput.getMoveCounter();
         int player = 1;
         int totalSquares = ConnectFourBoard.COLS * ConnectFourBoard.ROWS;
-        
+
         while (ArrayManipulation.sum(moveCounter) < totalSquares) {
             int move = gameInput.getInput(moveCounter, player);
 
