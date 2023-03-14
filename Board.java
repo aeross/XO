@@ -48,8 +48,8 @@ public class Board {
     public void buildBoard() {
         // builds an empty board (filled with ' ') with 2d array as explained above
         char newBoard[][] = new char[this.row][this.col];
-        for (char[] col: newBoard) {
-            Arrays.fill(col, ' ');
+        for (char[] row: newBoard) {
+            Arrays.fill(row, ' ');
         }
         this.board = newBoard;
     }
