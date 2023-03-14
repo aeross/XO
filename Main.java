@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void runXO() {
+    private static void runXO() {
         // 1: BUILD BOARD
         XOBoard gameBoard = new XOBoard();
         gameBoard.buildBoard();
@@ -49,14 +49,12 @@ public class Main {
     }
 
 
-    public static void runConnectFour() {
+    private static void runConnectFour() {
         // steps are mostly similar to the code in runXO()
-        // 1: BUILD BOARD
         ConnectFourBoard gameBoard = new ConnectFourBoard();
         gameBoard.buildBoard();
         gameBoard.printBoard();
 
-        // 2: PLAYER MOVE
         ConnectFourPlayerInput gameInput = new ConnectFourPlayerInput();
         int moveCounter[] = gameInput.getMoveCounter();
         int player = 1;
@@ -64,12 +62,13 @@ public class Main {
         
         while (ArrayManipulation.sum(moveCounter) < totalSquares) {
             int move = gameInput.getInput(moveCounter, player);
+
             moveCounter = gameInput.updateValidMoves(move, moveCounter);
+
             gameBoard.updateConnectFourBoard(player, move, moveCounter);
             System.out.println("");
             gameBoard.printBoard();
 
-            // 3: CHECK WIN CONDITION
             ConnectFourWin gameWin = new ConnectFourWin();
             if (gameWin.checkWin(gameBoard.getBoard())) {
                 System.out.println("Player " + player + " victory!");
@@ -79,7 +78,6 @@ public class Main {
             player = (player % 2) + 1;
         }
 
-        // 4: FINAL STEP
         if (ArrayManipulation.sum(moveCounter) == totalSquares && player == 1) {
             System.out.println("Draw!");
         }

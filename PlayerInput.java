@@ -63,7 +63,7 @@ import java.util.Arrays;
 
 class XOPlayerInput {
 
-    private static final int[] VALIDMOVES = {1, 2, 3, 4, 5, 6, 7, 8, 9};  // all valid moves
+    private final int[] VALIDMOVES = {1, 2, 3, 4, 5, 6, 7, 8, 9};  // all valid moves
 
     public int[] getValidMoves() {
         return VALIDMOVES;
@@ -92,6 +92,7 @@ class XOPlayerInput {
             // get input
             Scanner input = new Scanner(System.in);
             System.out.println("Player " + player + ", please make a move (1-9)");
+
             try {
                 move = input.nextInt();
                 // validate input
@@ -102,6 +103,7 @@ class XOPlayerInput {
                 } else {
                     System.out.println("Error: invalid move");
                 }
+                
             } catch (Exception e) {
                 System.out.println("Error: invalid move");
             }
@@ -115,8 +117,8 @@ class ConnectFourPlayerInput {
 
     // in connect 4, you can pick the same number multiple times until the column fills up,
     // or in a standard 6x7 connect 4, until the number has been picked 6 times by either player,
-    // so we'll use these to keep track of it
-    private static final int[] MOVECOUNTER = new int[ConnectFourBoard.COLS];
+    // so we'll use this to keep track of it
+    private final int[] MOVECOUNTER = new int[ConnectFourBoard.COLS];
 
     public int[] getMoveCounter() {
         return MOVECOUNTER;
@@ -144,12 +146,11 @@ class ConnectFourPlayerInput {
         boolean valid = false;
 
         while (!valid) {
-            // get input
             Scanner input = new Scanner(System.in);
             System.out.println("Player " + player + ", please make a move (1-7)");
+
             try {
                 move = input.nextInt();
-                // validate input
                 if (validateMoves(move, moveCounter)) {
                     valid = true;
                 } else if (move == 0) {
@@ -157,6 +158,7 @@ class ConnectFourPlayerInput {
                 } else {
                     System.out.println("Error: invalid move");
                 }
+
             } catch (Exception e) {
                 System.out.println("Error: invalid move");
             }

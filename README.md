@@ -10,8 +10,6 @@ javac *.java
 java Main
 ```
 
-After the program runs, type 1 to play Tic-Tac-Toe or 2 to play Connect Four.
-
 To take a deeper look into how the code works, open the following files in order, and the comments in the files will walk you through the process:
 
 ```
